@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:network_calls_with_repository_pattern/core/models/posts_model.dart';
 import 'package:network_calls_with_repository_pattern/core/network_manager/failure.dart';
@@ -17,6 +19,7 @@ class PostsViewModel extends BaseViewModel {
 
   _getPosts() async {
     try {
+      log(BaseViewModel().state.toString());
       changeState(const ViewModelState.busy());
       _posts = await ref.read(postService).getPosts();
       notifyListeners();

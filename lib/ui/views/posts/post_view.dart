@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:network_calls_with_repository_pattern/core/states/view_model_state.dart';
 import 'package:network_calls_with_repository_pattern/ui/views/posts/viewmodels/posts_viewmodel.dart';
 import 'package:network_calls_with_repository_pattern/ui/widgtes/error_view.dart';
 import 'package:network_calls_with_repository_pattern/ui/widgtes/loader.dart';
@@ -32,7 +33,8 @@ class _PostsViewState extends ConsumerState<PostsView> {
     return Scaffold(
       body: model.state.when(
         idle: () {
-          if (model.post.isEmpty) {
+          if (model.post.isEmpty &&
+              model.state != const ViewModelState.idle()) {
             return const Center(
               child: Text("No Posts"),
             );
