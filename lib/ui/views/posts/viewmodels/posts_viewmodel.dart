@@ -5,11 +5,12 @@ import 'package:network_calls_with_repository_pattern/core/services/posts_servic
 import 'package:network_calls_with_repository_pattern/core/states/base_view_model.dart';
 import 'package:network_calls_with_repository_pattern/core/states/view_model_state.dart';
 
-class PostsView extends BaseViewModel {
+class PostsViewModel extends BaseViewModel {
   AutoDisposeChangeNotifierProviderRef ref;
+  PostsViewModel(this.ref);
   List<Post> _posts = [];
   List<Post> get post => _posts;
-  PostsView(this.ref);
+
   onModelReady() {
     _getPosts();
   }

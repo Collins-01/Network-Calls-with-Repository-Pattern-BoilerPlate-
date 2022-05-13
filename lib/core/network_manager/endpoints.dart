@@ -1,4 +1,4 @@
 class EndPoints {
-  static const getPosts = "";
+  static const getPosts = "/posts";
   static const getComments = "";
 }

@@ -3,7 +3,7 @@ import 'package:network_calls_with_repository_pattern/core/network_manager/failu
 import 'package:network_calls_with_repository_pattern/core/network_manager/network_interceptors.dart';
 import 'package:network_calls_with_repository_pattern/core/services/auth_service.dart';
 
-const String _baseUrl = "";
+const String _baseUrl = "https://jsonplaceholder.typicode.com";
 
 class NetworkClient {
   ///Making the class a singleton

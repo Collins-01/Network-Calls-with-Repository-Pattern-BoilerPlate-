@@ -11,8 +11,9 @@ class PostsService extends PostsRepository {
   @override
   Future<List<Post>> getPosts() async {
     try {
-      await client.get(EndPoints.getPosts);
-      return <Post>[];
+      var response = await client.get(EndPoints.getPosts) as List;
+      List<Post> posts = response.map((e) => Post.fromJson(e)).toList();
+      return posts;
     } on Failure {
       rethrow;
     }

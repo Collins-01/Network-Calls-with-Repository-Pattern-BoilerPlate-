@@ -124,7 +124,7 @@ class NoInternetConnectionException extends DioError with Failure {
 
   @override
   String get message =>
-      "No internet connection, please check your internet setting and try again.";
+      "No internet connection, please check your internet settings..";
 
   @override
   String get title => "No Network";
