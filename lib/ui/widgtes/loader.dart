@@ -8,8 +8,8 @@ class Loader extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: SpinKitChasingDots(
-        color: Colors.green,
-        duration: Duration(milliseconds: 300),
+        color: Colors.blueAccent,
+        duration: Duration(milliseconds: 800),
         size: 100,
       ),
     );
