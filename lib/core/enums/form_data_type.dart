@@ -1,0 +1,1 @@
+enum FormDataType { post, patch }
