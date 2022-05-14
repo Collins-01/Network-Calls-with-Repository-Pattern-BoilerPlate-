@@ -1,8 +1,9 @@
 # This repo contains an efficient approach to making network calls in Flutter
 
 
-## To get started
- - git clone [https://github.com/Collins-01/Network-Calls-with-Repository-Pattern-BoilerPlate-.git]
+## Get Started
+
+git clone https://github.com/Collins-01/Network-Calls-with-Repository-Pattern-BoilerPlate-.git
  
 <!-- This project is a starting point for a Flutter application. -->
 
