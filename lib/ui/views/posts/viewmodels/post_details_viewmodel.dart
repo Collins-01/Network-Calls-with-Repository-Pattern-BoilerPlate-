@@ -1,27 +1,27 @@
 import 'dart:developer';
 
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:network_calls_with_repository_pattern/core/models/posts_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:network_calls_with_repository_pattern/core/models/comments_model.dart';
 import 'package:network_calls_with_repository_pattern/core/network_manager/failure.dart';
-import 'package:network_calls_with_repository_pattern/core/services/posts_service.dart';
 import 'package:network_calls_with_repository_pattern/core/states/base_view_model.dart';
 import 'package:network_calls_with_repository_pattern/core/states/view_model_state.dart';
+import '../../../../core/services/posts_service.dart';
 
-class PostsViewModel extends BaseViewModel {
-  AutoDisposeChangeNotifierProviderRef ref;
-  PostsViewModel(this.ref);
-  List<Post> _posts = [];
-  List<Post> get posts => _posts;
+class PostDetailsViewModel extends BaseViewModel {
+  ChangeNotifierProviderRef ref;
+  PostDetailsViewModel(this.ref);
+  List<Comment> _comments = [];
+  List<Comment> get comments => _comments;
 
-  onModelReady() {
-    _getPosts();
+  onModelReady(int id) {
+    _getComments(id);
   }
 
-  _getPosts() async {
+  _getComments(int id) async {
     try {
       log(BaseViewModel().state.toString());
       changeState(const ViewModelState.busy());
-      _posts = await ref.read(postService).getPosts();
+      _comments = await ref.read(postService).getComments(id);
       notifyListeners();
       changeState(const ViewModelState.idle());
     } on Failure catch (e) {

@@ -1,8 +1,9 @@
 import 'dart:developer';
-
+import '../../../core/extensions/xstrings.dart' show XString;
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:network_calls_with_repository_pattern/core/states/view_model_state.dart';
+import 'package:network_calls_with_repository_pattern/ui/views/posts/post_details_view.dart';
 import 'package:network_calls_with_repository_pattern/ui/views/posts/viewmodels/posts_viewmodel.dart';
 import 'package:network_calls_with_repository_pattern/ui/widgtes/error_view.dart';
 import 'package:network_calls_with_repository_pattern/ui/widgtes/loader.dart';
@@ -31,30 +32,46 @@ class _PostsViewState extends ConsumerState<PostsView> {
   Widget build(BuildContext context) {
     var model = ref.watch(_postViewModel);
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Posts"),
+      ),
       body: model.state.when(
         idle: () {
-          if (model.post.isEmpty &&
+          if (model.posts.isEmpty &&
               model.state != const ViewModelState.idle()) {
             return const Center(
               child: Text("No Posts"),
             );
           } else {
             return ListView.builder(
-              itemCount: model.post.length,
+              itemCount: model.posts.length,
               itemBuilder: (_, index) => Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        model.post[index].title,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                        ),
+                  child: InkWell(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) =>
+                            PostDetailsView(post: model.posts[index]))),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(.5),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(16),
+                          )),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            model.posts[index].title.capitalize(),
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(model.posts[index].body.capitalize()),
+                        ],
                       ),
-                      Text(model.post[index].body),
-                    ],
+                    ),
                   )),
             );
           }
