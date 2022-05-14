@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:network_calls_with_repository_pattern/core/services/theme_service.dart';
+
 import '../../../core/extensions/xstrings.dart' show XString;
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -34,6 +36,15 @@ class _PostsViewState extends ConsumerState<PostsView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Posts"),
+        actions: [
+          Consumer(builder: (_, theme, __) {
+            return Switch(
+                value: theme.watch(themeService).isDark,
+                onChanged: (v) {
+                  theme.watch(themeService).toggleTheme();
+                });
+          })
+        ],
       ),
       body: model.state.when(
         idle: () {
