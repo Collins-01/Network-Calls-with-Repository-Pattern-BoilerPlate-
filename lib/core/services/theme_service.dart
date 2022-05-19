@@ -13,8 +13,6 @@ class ThemeService extends StateNotifier<bool> {
 
   Future<void> toggleTheme() async {
     state = !state;
-
-    log("New Theme Value...... $state");
     _saveTheme();
   }
 
