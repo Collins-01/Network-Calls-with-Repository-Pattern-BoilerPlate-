@@ -39,9 +39,10 @@ class _PostsViewState extends ConsumerState<PostsView> {
         actions: [
           Consumer(builder: (_, theme, __) {
             return Switch(
-                value: theme.watch(themeService).isDark,
+                // ignore: invalid_use_of_protected_member
+                value: theme.watch(themeService.notifier).state,
                 onChanged: (v) {
-                  theme.watch(themeService).toggleTheme();
+                  theme.watch(themeService.notifier).toggleTheme();
                 });
           })
         ],
