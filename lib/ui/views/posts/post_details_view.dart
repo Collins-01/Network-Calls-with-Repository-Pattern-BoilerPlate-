@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:network_calls_with_repository_pattern/core/models/posts_model.dart';
+import 'package:network_calls_with_repository_pattern/ui/views/posts/componets/build_post_details_shimmer.dart';
 import 'package:network_calls_with_repository_pattern/ui/views/posts/viewmodels/post_details_viewmodel.dart';
 import 'package:network_calls_with_repository_pattern/ui/widgtes/error_view.dart';
-import 'package:network_calls_with_repository_pattern/ui/widgtes/loader.dart';
 import '../../../core/extensions/xcontext.dart' show Context;
 import '../../../core/extensions/xstrings.dart' show XString;
 
@@ -66,9 +66,12 @@ class _PostDetailsViewState extends ConsumerState<PostDetailsView> {
               height: 20,
             ),
             model.state.when(
-                busy: () => const SizedBox(
-                      height: 100,
-                      child: Loader(),
+                busy: () => Expanded(
+                      child: ListView.builder(
+                        itemCount: 8,
+                        itemBuilder: (context, index) =>
+                            const BuildPostDetailsShimmer(),
+                      ),
                     ),
                 error: (e) => ErrorView(
                     retry: () => model.onModelReady(widget.post.id),
