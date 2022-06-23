@@ -169,3 +169,19 @@ class ServerCommunicationException extends DioError with Failure {
   @override
   String get title => r?.data?["message"] ?? "Network error";
 }
+
+class RequestUnknownExcpetion extends DioError with Failure {
+  final Response? serverResponse;
+  final RequestOptions requestOptions;
+  RequestUnknownExcpetion(this.requestOptions, [this.serverResponse])
+      : super(
+          requestOptions: requestOptions,
+          response: serverResponse,
+        );
+
+  @override
+  String get message => "An unknown error occured, please try again later.";
+
+  @override
+  String get title => "Unkown Error";
+}

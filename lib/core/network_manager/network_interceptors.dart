@@ -32,27 +32,72 @@ class NetworkInterceptors extends Interceptor {
     // log(err.response?.data.toString() ?? "");
     // log(err.response?.statusCode.toString() ?? "");
     // log("=====error end======");
+    // switch (err.type) {
+    //   case DioErrorType.connectTimeout:
+    //   case DioErrorType.sendTimeout:
+    //   case DioErrorType.receiveTimeout:
+    //     // reasign err variable
+    //     err = DeadlineExceededException(err.requestOptions);
+    //     break;
+    //   case DioErrorType.response:
+    //     try {
+    //       checkStatusCode(err.requestOptions, err.response);
+    //     } on DioError catch (failure) {
+    //       // reasign err variable
+    //       err = failure;
+    //     }
+
+    //     break;
+    //   case DioErrorType.cancel:
+    //     break;
+    //   case DioErrorType.other:
+    //     // _log.e(err.message);
+    //     err = NoInternetConnectionException(err.requestOptions);
+    // }
     switch (err.type) {
       case DioErrorType.connectTimeout:
       case DioErrorType.sendTimeout:
       case DioErrorType.receiveTimeout:
-        // reasign err variable
         err = DeadlineExceededException(err.requestOptions);
         break;
       case DioErrorType.response:
-        try {
-          checkStatusCode(err.requestOptions, err.response);
-        } on DioError catch (failure) {
-          // reasign err variable
-          err = failure;
+        if (err.response != null) {
+          switch (err.response?.statusCode) {
+            case 400:
+              err = BadRequestException(err.requestOptions, err.response);
+              break;
+            case 401:
+              err = UnAuthorizedException(err.requestOptions, err.response);
+              break;
+            case 403:
+              err = UnAuthorizedException(err.requestOptions, err.response);
+              break;
+            case 404:
+              err = NotFoundException(err.requestOptions, err.response);
+              break;
+            case 409:
+              err = ConflictException(err.requestOptions, err.response);
+              break;
+            case 500:
+              err = InternalServerErrorException(
+                  err.requestOptions, err.response);
+              break;
+            case 503:
+              err = ServerCommunicationException(err.response);
+              break;
+            default:
+              err = RequestUnknownExcpetion(err.requestOptions, err.response);
+              break;
+          }
+        } else {
+          err = RequestUnknownExcpetion(err.requestOptions, err.response);
         }
-
         break;
       case DioErrorType.cancel:
         break;
       case DioErrorType.other:
-        // _log.e(err.message);
         err = NoInternetConnectionException(err.requestOptions);
+        break;
     }
     //continue
     return handler.next(err);

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:network_calls_with_repository_pattern/core/services/theme_service.dart';
+import 'package:network_calls_with_repository_pattern/ui/base_view.dart';
 
 import '../../../core/extensions/xstrings.dart' show XString;
 import 'package:flutter/material.dart';
@@ -94,11 +95,26 @@ class _PostsViewState extends ConsumerState<PostsView> {
     );
   }
 }
+
 /// *
 /// Empty List
 /// Error
 /// Loading
 /// Not Loading[Done]
-/// 
+///
 
+// class TestBaseView extends StatelessWidget {
+//   const TestBaseView({Key? key}) : super(key: key);
 
+//   @override
+//   Widget build(BuildContext context) {
+//     final model =
+//         ChangeNotifierProvider.autoDispose((ref) => PostsViewModel(ref));
+//     return BaseView<model>(
+//       onModelReady: (vm) {
+//         vm.onModelReady();
+//       },
+//       widget: const Scaffold(),
+//     );
+//   }
+// }
